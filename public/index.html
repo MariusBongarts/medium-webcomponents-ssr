@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Components | SSR</title>
+</head>
+
+<body>
+
+    <fancy-headline>Fancy Headline</fancy-headline>
+
+
+    <script>
+        class FancyHeadline extends HTMLElement {
+            template = document.createElement("template");
+
+            constructor() {
+                super();
+                this.attachShadow({ mode: "open" });
+
+                this.template.innerHTML = ` 
+                <style> 
+                    h1 { 
+                        font-size: 70px; 
+                        font-weight: 600; 
+                        background-image: 
+                        linear-gradient(to left, #007f4b, #53e3a6); 
+                        color: transparent; 
+                        background-clip: text; 
+                        -webkit-background-clip: text; 
+                    } 
+                </style> 
+                <h1 part="header"><slot></slot></h1>
+                `
+
+                this.render();
+            }
+
+            render() {
+                this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+            }
+        }
+
+        customElements.define("fancy-headline", FancyHeadline);
+
+    </script>
+</body>
+
+</html>
